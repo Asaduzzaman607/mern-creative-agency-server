@@ -49,17 +49,27 @@ app.get('/getOrderList', (req, res) => {
       })
   })
 
-  app.patch('/updateStatus', (req, res) => {
-    console.log(req.body)
-    ordersCollection.updateOne({ _id:ObjectId(req.body.id) },
-        {
-            $set: { status: req.body.status }
-        })
-        .then(result => {
-            console.log(result)
-            res.send(result)
-        })
-})
+//   app.patch('/updateStatus', (req, res) => {
+//     console.log(req.body)
+//     ordersCollection.updateOne({ _id:ObjectId(req.body.id) },
+//         {
+//             $set: { status: req.body.status }
+//         })
+//         .then(result => {
+//             console.log(result)
+//             res.send(result)
+//         })
+// })
+app.patch('/updateStatus/:id', (req, res) => {
+    ordersCollection.updateOne({ _id: ObjectId(req.params.id) },
+      {
+        $set: { project: req.body.project }
+      })
+      .then(result => {
+        console.log(result)
+        res.send(result.modifiedCount > 0)
+      })
+  });
 
 app.get('/userOrder/:email', (req, res) => {
   const email = req.params.email;
