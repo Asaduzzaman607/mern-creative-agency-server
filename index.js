@@ -63,7 +63,7 @@ app.get('/getOrderList', (req, res) => {
 app.patch('/updateStatus/:id', (req, res) => {
     ordersCollection.updateOne({ _id: ObjectId(req.params.id) },
       {
-        $set: { project: req.body.project }
+        $set: { status: req.body.status }
       })
       .then(result => {
         console.log(result)
